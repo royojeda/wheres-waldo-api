@@ -2,3 +2,14 @@ inherit_from: ~/.rubocop.yml
 
 require:
   - rubocop-rails
+  - rubocop-rspec
+
+Style/NumericLiterals:
+  Enabled: false
+
+RSpec/FilePath:
+  SpecSuffixOnly: true
+  Enabled: true
+
+RSpec/MultipleExpectations:
+  Enabled: false

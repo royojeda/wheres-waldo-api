@@ -52,3 +52,5 @@ group :test do
   gem "factory_bot_rails"
   gem "faker"
 end
+
+gem "rubocop-rspec", "~> 2.18"
