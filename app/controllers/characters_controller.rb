@@ -1,8 +1,12 @@
 class CharactersController < ApplicationController
   def index
-    @character = Character.locate(character_params)
+    if request.query_string.present?
+      @character = Character.locate(character_params)
 
-    render json: @character, only: %i[name x_coordinate y_coordinate]
+      render json: @character, only: %i[name x_coordinate y_coordinate]
+    else
+      render json: Character.all, only: :name
+    end
   end
 
   private
