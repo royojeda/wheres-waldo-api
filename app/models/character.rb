@@ -13,9 +13,11 @@ class Character < ApplicationRecord
     Rails.logger.debug 100.0 / 39333
     Rails.logger.debug
 
-    where(name:,
-          x_coordinate: left_edge..right_edge,
-          y_coordinate: top_edge..bottom_edge)
+    where(
+      name:,
+      x_coordinate: left_edge..right_edge,
+      y_coordinate: top_edge..bottom_edge
+    )
   end
 end
 
