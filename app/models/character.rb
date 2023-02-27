@@ -19,6 +19,10 @@ class Character < ApplicationRecord
       y_coordinate: top_edge..bottom_edge
     )
   end
+
+  def self.to_find
+    where(id: pluck(:id).sample(4))
+  end
 end
 
 # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

@@ -5,7 +5,7 @@ class CharactersController < ApplicationController
 
       render json: @character, only: %i[name x_coordinate y_coordinate]
     else
-      render json: Character.all, only: :name
+      render json: Character.to_find, only: %i[id name]
     end
   end
 
