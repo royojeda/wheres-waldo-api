@@ -3,15 +3,16 @@ class Character < ApplicationRecord
   def self.locate(character_params)
     character_params => {name:, x_coordinate:, y_coordinate:}
 
-    left_edge = (x_coordinate.to_f - (1.0 / 60))
-    right_edge = x_coordinate.to_f + (1.0 / 60)
-    top_edge = y_coordinate.to_f - (100.0 / 39333)
-    bottom_edge = y_coordinate.to_f + (100.0 / 39333)
+    scale_factor = 30
+    image_size = (2000.0 / 13111)
 
-    Rails.logger.debug
-    Rails.logger.debug 1.0 / 60
-    Rails.logger.debug 100.0 / 39333
-    Rails.logger.debug
+    width = (1.0 / scale_factor)
+    height = (image_size * width)
+
+    left_edge = x_coordinate.to_f - (0.5 * width)
+    right_edge = x_coordinate.to_f + (0.5 * width)
+    top_edge = y_coordinate.to_f - (0.5 * height)
+    bottom_edge = y_coordinate.to_f + (0.5 * height)
 
     where(
       name:,
