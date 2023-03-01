@@ -5,7 +5,7 @@ class CharactersController < ApplicationController
       if session[:timer_started]
         @character = Character.locate(character_params)
 
-        render json: @character, only: %i[name x_coordinate y_coordinate]
+        render json: @character, only: %i[id name x_coordinate y_coordinate]
       else
         render json: { error: "The timer has not been started." }
       end
