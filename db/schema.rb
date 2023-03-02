@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_02_034946) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_02_035416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "character_assignments", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "character_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_character_assignments_on_character_id"
+    t.index ["game_id"], name: "index_character_assignments_on_game_id"
+  end
 
   create_table "characters", force: :cascade do |t|
     t.string "name"
@@ -30,4 +39,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_034946) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "character_assignments", "characters"
+  add_foreign_key "character_assignments", "games"
 end

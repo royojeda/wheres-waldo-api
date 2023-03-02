@@ -1,5 +1,8 @@
 # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 class Character < ApplicationRecord
+  has_many :character_assignments, dependent: :destroy
+  has_many :games, through: :character_assignments
+
   def self.locate(character_params)
     character_params => {name:, x_coordinate:, y_coordinate:}
 
