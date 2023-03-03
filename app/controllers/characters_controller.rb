@@ -12,10 +12,9 @@ class CharactersController < ApplicationController
     else
       reset_session
 
-      # Temporary. Set this on the future GamesController#create
-      session[:timer_started] = true
-
-      render json: Character.to_find, only: %i[id name]
+      characters = Character.to_find
+      session[:characters] = characters
+      render json: characters, only: %i[id name]
     end
   end
 

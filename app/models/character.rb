@@ -27,6 +27,16 @@ class Character < ApplicationRecord
   def self.to_find
     where(id: pluck(:id).sample(4))
   end
+
+  def self.from_partial(character)
+    find_by(id: character["id"], name: character["name"])
+  end
+
+  def self.from_partials(characters)
+    characters.map do |character|
+      from_partial(character)
+    end
+  end
 end
 
 # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
