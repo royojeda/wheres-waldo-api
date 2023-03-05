@@ -3,6 +3,7 @@ inherit_from: ~/.rubocop.yml
 require:
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-performance
 
 Style/NumericLiterals:
   Enabled: false
