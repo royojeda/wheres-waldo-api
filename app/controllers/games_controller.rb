@@ -13,7 +13,11 @@ class GamesController < ApplicationController
       return head(:bad_request)
     end
 
-    head :ok
+    if game_params[:found_characters]
+      render json: { score: game.score }
+    else
+      head :ok
+    end
   end
 
   private
