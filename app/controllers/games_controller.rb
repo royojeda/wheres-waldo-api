@@ -9,9 +9,10 @@ class GamesController < ApplicationController
   def update
     game = Game.find(params[:id])
 
-    return head(:bad_request) unless game.finished?(game_params[:found_characters])
+    if game.completed? || updating_set_name?(game) || updating_set_time?(game) || !game.record(game_params)
+      return head(:bad_request)
+    end
 
-    game.stop_time
     head :ok
   end
 
@@ -20,8 +21,16 @@ class GamesController < ApplicationController
   def game_params
     params
       .require(:game)
-      .permit(found_characters: %i[id name x_coordinate y_coordinate])
+      .permit(:player_name, found_characters: %i[id name x_coordinate y_coordinate])
       .to_h
       .symbolize_keys
+  end
+
+  def updating_set_time?(game)
+    game.end_time && game_params[:found_characters]
+  end
+
+  def updating_set_name?(game)
+    game.player_name && game_params[:player_name]
   end
 end

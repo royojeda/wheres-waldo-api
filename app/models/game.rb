@@ -12,15 +12,17 @@ class Game < ApplicationRecord
     self.characters = Character.from_partials(characters)
   end
 
-  def stop_time
-    update(end_time: Time.zone.now)
+  def record(game_params)
+    (if game_params[:player_name]
+       update(player_name: game_params[:player_name].to_s)
+     end) || (update(end_time: Time.zone.now) if found_characters?(game_params[:found_characters]))
   end
 
-  def finished?(found_characters)
-    start_time && !end_time && found_everyone?(found_characters)
+  def completed?
+    player_name && end_time
   end
 
-  def found_everyone?(found_characters)
+  def found_characters?(found_characters)
     ((correct_answer - found_characters) + (found_characters - correct_answer)).empty?
   end
 
