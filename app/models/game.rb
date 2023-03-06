@@ -31,4 +31,8 @@ class Game < ApplicationRecord
       char.slice(:id, :name, :x_coordinate, :y_coordinate)
     end
   end
+
+  def score
+    end_time - start_time
+  end
 end
