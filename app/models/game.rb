@@ -2,6 +2,12 @@ class Game < ApplicationRecord
   has_many :character_assignments, dependent: :destroy
   has_many :characters, through: :character_assignments
 
+  def self.with_same_characters(found_characters)
+    all.includes(:characters).order(:id).select do |game|
+      game.end_time && game.characters.pluck(:id).sort == found_characters.pluck("id").sort
+    end
+  end
+
   def self.start(characters)
     game = create(start_time: Time.zone.now)
     game.assign_characters(characters)

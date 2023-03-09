@@ -1,4 +1,10 @@
 class GamesController < ApplicationController
+  def index
+    games = Game.with_same_characters(session[:characters])
+
+    render json: games, only: %i[id player_name], methods: [:score]
+  end
+
   def create
     game = Game.start(session[:characters])
 
