@@ -25,7 +25,7 @@ class Character < ApplicationRecord
   end
 
   def self.to_find
-    where(id: pluck(:id).sample(4))
+    where(id: pluck(:id).sample(4)).order("random()")
   end
 
   def self.from_partial(character)
