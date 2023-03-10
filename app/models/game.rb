@@ -3,9 +3,9 @@ class Game < ApplicationRecord
   has_many :characters, through: :character_assignments
 
   def self.with_same_characters(found_characters)
-    all.includes(:characters).order(:id).select do |game|
+    all.includes(:characters).where.not(end_time: nil).sort_by(&:score).select do |game|
       game.end_time && game.characters.pluck(:id).sort == found_characters.pluck("id").sort
-    end
+    end.first(5)
   end
 
   def self.start(characters)
