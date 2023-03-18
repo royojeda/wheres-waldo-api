@@ -27,3 +27,11 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+/public/*
+
+.dockerignore
+Dockerfile
+fly.toml
+bin/docker-entrypoint
+config/dockerfile.yml
