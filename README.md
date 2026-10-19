@@ -93,7 +93,7 @@ This request is supposed to represent each of the user's guesses for a Character
 GET /games
 ```
 
-This request returns the five completed Game objects with the lowest scores, fastest first, regardless of which Characters they were assigned. This is useful for constructing a global "high score" display. Each Game object contains its `id` and `player_name` attributes, along with a computed `score` attribute representing the time in seconds between the Game's start time and end time.
+This request returns the five completed Game objects with a player name and the lowest scores, fastest first, regardless of which Characters they were assigned. This is useful for constructing a global "high score" display. Each Game object contains its `id` and `player_name` attributes, along with a computed `score` attribute representing the time in seconds between the Game's start time and end time.
 
 --
 

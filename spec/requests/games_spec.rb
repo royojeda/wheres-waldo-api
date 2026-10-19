@@ -12,9 +12,10 @@ RSpec.describe "Games" do
                      characters: [i.even? ? batman : mario])
       end
       Game.create!(player_name: "unfinished", start_time:)
+      Game.create!(start_time:, end_time: start_time + 5)
     end
 
-    it "returns the five fastest completed games regardless of their characters" do
+    it "returns the five fastest completed, named games regardless of their characters" do
       get games_path
 
       expect(response.parsed_body.pluck("score")).to eq([10.0, 20.0, 30.0, 40.0, 50.0])

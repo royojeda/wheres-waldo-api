@@ -6,7 +6,7 @@ class Game < ApplicationRecord
   validates :player_name, presence: true, length: { maximum: 10 }, allow_nil: true
 
   def self.high_scores
-    where.not(end_time: nil).order(Arel.sql("end_time - start_time"), :id).limit(5)
+    where.not(end_time: nil).where.not(player_name: nil).order(Arel.sql("end_time - start_time"), :id).limit(5)
   end
 
   def self.start(characters)
