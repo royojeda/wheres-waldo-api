@@ -1,16 +1,25 @@
-inherit_from: ~/.rubocop.yml
-
-require:
+plugins:
+  - rubocop-factory_bot
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
   - rubocop-performance
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.4
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
 
 Style/NumericLiterals:
   Enabled: false
-
-RSpec/FilePath:
-  SpecSuffixOnly: true
-  Enabled: true
 
 RSpec/MultipleExpectations:
   Enabled: false

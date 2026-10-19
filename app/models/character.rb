@@ -4,7 +4,7 @@ class Character < ApplicationRecord
   has_many :games, through: :character_assignments
 
   def self.locate(character_params)
-    character_params => {name:, x_coordinate:, y_coordinate:}
+    character_params => { name:, x_coordinate:, y_coordinate: }
 
     scale_factor = 30
     image_size = (2000.0 / 13111)

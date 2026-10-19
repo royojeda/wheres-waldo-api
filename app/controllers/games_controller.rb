@@ -13,7 +13,7 @@ class GamesController < ApplicationController
   end
 
   def update
-    game = Game.find(params[:id])
+    game = Game.find(params.expect(:id))
 
     if game.completed? || updating_set_name?(game) || updating_set_time?(game) || !game.record(game_params)
       return head(:bad_request)
@@ -30,8 +30,7 @@ class GamesController < ApplicationController
 
   def game_params
     params
-      .require(:game)
-      .permit(:player_name, found_characters: %i[id name x_coordinate y_coordinate])
+      .expect(game: [:player_name, { found_characters: [%i[id name x_coordinate y_coordinate]] }])
       .to_h
       .symbolize_keys
   end
