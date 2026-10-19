@@ -2,10 +2,8 @@ class Game < ApplicationRecord
   has_many :character_assignments, dependent: :destroy
   has_many :characters, through: :character_assignments
 
-  def self.with_same_characters(found_characters)
-    includes(:characters).where.not(end_time: nil).sort_by(&:score).select do |game|
-      game.end_time && game.characters.pluck(:id).sort == found_characters.pluck("id").sort
-    end.first(5)
+  def self.high_scores
+    where.not(end_time: nil).order(Arel.sql("end_time - start_time"), :id).limit(5)
   end
 
   def self.start(characters)
