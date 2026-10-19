@@ -26,4 +26,20 @@ RSpec.describe "Games" do
       expect(response.parsed_body.first.keys).to contain_exactly("id", "player_name", "score")
     end
   end
+
+  describe "PATCH /games/:id" do
+    let(:game) { Game.create!(start_time: 1.minute.ago, end_time: Time.zone.now) }
+
+    it "saves the player name" do
+      patch game_path(game), params: { game: { player_name: "Waldo" } }, as: :json
+
+      expect(game.reload.player_name).to eq("Waldo")
+    end
+
+    it "rejects a blank player name" do
+      patch game_path(game), params: { game: { player_name: "   " } }, as: :json
+
+      expect(response).to have_http_status(:bad_request)
+    end
+  end
 end

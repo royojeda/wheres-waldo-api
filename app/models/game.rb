@@ -2,6 +2,9 @@ class Game < ApplicationRecord
   has_many :character_assignments, dependent: :destroy
   has_many :characters, through: :character_assignments
 
+  normalizes :player_name, with: ->(name) { name.strip }
+  validates :player_name, presence: true, length: { maximum: 10 }, allow_nil: true
+
   def self.high_scores
     where.not(end_time: nil).order(Arel.sql("end_time - start_time"), :id).limit(5)
   end
@@ -17,9 +20,11 @@ class Game < ApplicationRecord
   end
 
   def record(game_params)
-    (if game_params[:player_name]
-       update(player_name: game_params[:player_name].to_s)
-     end) || (update(end_time: Time.zone.now) if found_characters?(game_params[:found_characters]))
+    if game_params[:player_name]
+      update(player_name: game_params[:player_name].to_s)
+    elsif found_characters?(game_params[:found_characters])
+      update(end_time: Time.zone.now)
+    end
   end
 
   def completed?
