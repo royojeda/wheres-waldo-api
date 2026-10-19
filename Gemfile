@@ -4,13 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.4.11"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.4"
-
-# No longer default gems as of Ruby 3.4, but required by Rails 7.0
-gem "base64"
-gem "bigdecimal"
-gem "mutex_m"
-gem "drb"
+gem "rails", "~> 8.1.4"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
