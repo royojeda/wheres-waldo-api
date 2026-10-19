@@ -5,8 +5,14 @@ class Game < ApplicationRecord
   normalizes :player_name, with: ->(name) { name.strip }
   validates :player_name, presence: true, length: { maximum: 10 }, allow_nil: true
 
-  def self.high_scores
-    where.not(end_time: nil).where.not(player_name: nil).order(Arel.sql("end_time - start_time"), :id).limit(5)
+  LEADERBOARD_SIZE = 10
+
+  # The fastest completed, named games, plus the given game wherever it ranks.
+  def self.leaderboard(including: nil)
+    completed = where.not(end_time: nil).where.not(player_name: nil)
+    ranked = completed.select("games.*, ROW_NUMBER() OVER (ORDER BY end_time - start_time, id) AS rank")
+
+    from(ranked, :games).where("rank <= :size OR id = :id", size: LEADERBOARD_SIZE, id: including).order(:rank)
   end
 
   def self.start(characters)

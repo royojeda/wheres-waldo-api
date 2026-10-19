@@ -93,7 +93,7 @@ This request is supposed to represent each of the user's guesses for a Character
 GET /games
 ```
 
-This request returns the five completed Game objects with a player name and the lowest scores, fastest first, regardless of which Characters they were assigned. This is useful for constructing a global "high score" display. Each Game object contains its `id` and `player_name` attributes, along with a computed `score` attribute representing the time in seconds between the Game's start time and end time.
+This request returns the ten completed Game objects with a player name and the lowest scores, fastest first, regardless of which Characters they were assigned. This is useful for constructing a global "high score" display. If the Game started in the current session (see `POST /games`) is completed and named but ranks outside the top ten, it is appended to the end. Each Game object contains its `id`, `player_name` and `rank` (its position among all completed, named Games) attributes, along with a computed `score` attribute representing the time in seconds between the Game's start time and end time.
 
 --
 
@@ -103,7 +103,7 @@ POST /games
 
 This request allows the creation of Game instances. There are no required parameters. The current time at the moment of receiving the request is recorded as the start time. The response is a Game object with only its `id` attribute.
 
-**Important:** The `session[:timer_started]` is set to true after receiving this request to indicate that the user is allowed to make guesses as the Game's start time has been recorded.
+**Important:** The `session[:timer_started]` is set to true after receiving this request to indicate that the user is allowed to make guesses as the Game's start time has been recorded. The new Game's `id` is also saved in `session[:game_id]` so that `GET /games` can include it.
 
 --
 

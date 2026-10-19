@@ -1,14 +1,15 @@
 class GamesController < ApplicationController
   def index
-    games = Game.high_scores
+    games = Game.leaderboard(including: session[:game_id])
 
-    render json: games, only: %i[id player_name], methods: [:score]
+    render json: games, only: %i[id player_name rank], methods: [:score]
   end
 
   def create
     game = Game.start(session[:characters])
 
     session[:timer_started] = true
+    session[:game_id] = game.id
     render json: game, only: [:id]
   end
 
