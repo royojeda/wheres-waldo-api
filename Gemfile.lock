@@ -67,6 +67,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     ast (2.4.2)
+    base64 (0.3.0)
+    bigdecimal (4.1.3)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -79,6 +81,7 @@ GEM
     diff-lcs (1.5.0)
     dockerfile-rails (1.2.5)
       rails
+    drb (2.2.3)
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -108,6 +111,7 @@ GEM
     mini_mime (1.1.2)
     minitest (5.17.0)
     msgpack (1.6.0)
+    mutex_m (0.3.0)
     net-imap (0.3.4)
       date
       net-protocol
@@ -118,11 +122,11 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.14.2-aarch64-linux)
+    nokogiri (1.19.4-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.14.2-arm64-darwin)
+    nokogiri (1.19.4-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.14.2-x86_64-linux)
+    nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
     parallel (1.22.1)
     parser (3.2.1.0)
@@ -220,15 +224,20 @@ GEM
 
 PLATFORMS
   aarch64-linux
+  arm64-darwin
   arm64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
+  base64
+  bigdecimal
   bootsnap
   debug
   dockerfile-rails
+  drb
   factory_bot_rails
   faker
+  mutex_m
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
@@ -240,7 +249,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 3.2.1p31
+   ruby 3.4.11p137
 
 BUNDLED WITH
    2.4.6
