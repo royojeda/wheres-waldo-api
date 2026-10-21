@@ -28,19 +28,17 @@
   ["Brian Griffin", 0.141, 0.8182442224086645],
   ["Samus Aran", 0.6325, 0.9686522767142094],
   ["Jake the Dog", 0.69, 0.9254061475097246],
-  ["Wolverine", 0.245, 0.9640759667454809],
-  ["Vash the Stampede", 0.0275, 0.9644573259095416],
-  ["Leeloo", 0.85, 0.540157119975593],
+  ["Wolverine", 0.2425, 0.9616352680954924],
+  ["Vash the Stampede", 0.032, 0.9616352680954924],
+  ["Leeloo", 0.85, 0.5389367706505988],
   ["Cortana", 0.92, 0.8521089161772557],
-  ["Battle Droid", 0.735, 0.19792540614750972],
+  ["Battle Droid", 0.73, 0.1944931736709633],
   ["Stewie Griffin", 0.942, 0.8523377316756922],
   ["Finn", 0.6695, 0.9231942643581725],
   ["Minion", 0.7825, 0.4095797422012051],
-  ["The Mandalorian", 0.4, 0.10830600259324231],
-  ["Jabba the Hutt", 0.625, 0.8023796811837388],
+  ["The Mandalorian", 0.4, 0.10601784760887804],
+  ["Jabba the Hutt", 0.63, 0.8004728853634353],
   ["Zoidberg", 0.84, 0.9072534513004348]
 ].each do |name, x_coordinate, y_coordinate|
-  Character.find_or_create_by!(name:) do |character|
-    character.assign_attributes(x_coordinate:, y_coordinate:)
-  end
+  Character.find_or_initialize_by(name:).update!(x_coordinate:, y_coordinate:)
 end
