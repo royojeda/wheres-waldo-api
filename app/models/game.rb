@@ -7,9 +7,23 @@ class Game < ApplicationRecord
 
   LEADERBOARD_SIZE = 10
 
+  scope :active, -> { where(archived_at: nil) }
+
+  # Hides every active game from the leaderboard. Returns the batch's timestamp, which restores it.
+  def self.archive_all
+    archived_at = Time.zone.now.floor(6)
+    active.update_all(archived_at:) # rubocop:disable Rails/SkipsModelValidations
+    archived_at
+  end
+
+  # Returns the games archived at the given time, or in the latest batch, to the leaderboard.
+  def self.restore(archived_at = maximum(:archived_at))
+    where(archived_at:).update_all(archived_at: nil) # rubocop:disable Rails/SkipsModelValidations
+  end
+
   # The fastest completed, named games, plus the given game wherever it ranks.
   def self.leaderboard(including: nil)
-    completed = where.not(end_time: nil).where.not(player_name: nil)
+    completed = active.where.not(end_time: nil).where.not(player_name: nil)
     ranked = completed.select("games.*, ROW_NUMBER() OVER (ORDER BY end_time - start_time, id) AS rank")
 
     from(ranked, :games).where("rank <= :size OR id = :id", size: LEADERBOARD_SIZE, id: including).order(:rank)

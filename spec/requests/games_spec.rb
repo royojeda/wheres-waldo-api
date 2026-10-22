@@ -66,6 +66,44 @@ RSpec.describe "Games" do
         expect(response.parsed_body.length).to eq(10)
       end
     end
+
+    context "when the games are archived" do
+      before { Game.archive_all }
+
+      it "returns no games" do
+        get games_path
+
+        expect(response.parsed_body).to be_empty
+      end
+
+      it "ranks new games from first place" do
+        Game.create!(player_name: "newcomer", start_time:, end_time: start_time + 500)
+        get games_path
+
+        expect(response.parsed_body).to contain_exactly(include("player_name" => "newcomer", "rank" => 1))
+      end
+
+      it "returns them once restored" do
+        Game.restore
+        get games_path
+
+        expect(response.parsed_body.pluck("score")).to eq((1..10).map { |i| i * 10.0 })
+      end
+    end
+
+    context "when restoring an earlier batch" do
+      before do
+        first_batch = Game.archive_all
+        Game.create!(player_name: "eventgoer", start_time:, end_time: start_time + 1)
+        Game.archive_all
+        Game.restore(first_batch)
+        get games_path
+      end
+
+      it "returns that batch without the later one" do
+        expect(response.parsed_body.pluck("player_name")).not_to include("eventgoer")
+      end
+    end
   end
 
   describe "PATCH /games/:id" do
